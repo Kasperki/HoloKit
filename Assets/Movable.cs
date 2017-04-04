@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 namespace HoloKit
 {
@@ -59,12 +56,12 @@ namespace HoloKit
 
         public void OnHold()
         {
-            throw new NotImplementedException();
+            _manipulator.ToggleManipulating();
         }
 
         public void OnRelease()
         {
-            throw new NotImplementedException();
+            _manipulator.ToggleManipulating();
         }
 
         public void OnGazeEnter()

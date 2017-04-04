@@ -9,6 +9,8 @@ namespace HoloKit
 
         public LayerMask layerMask;
 
+        public bool RotateTowards = true;
+
         private Vector3 initialHandPosition;
         private Vector3 initialObjectPosition;
         private Interpolator targetInterpolator;
@@ -59,7 +61,7 @@ namespace HoloKit
             var gazeDirection = Camera.main.transform.forward;
 
             RaycastHit hitInfo;
-            if (Physics.Raycast(headPosition, gazeDirection, out hitInfo, GazeManager.Instance.MaxGazeDistance, layerMask)) //SpatialMappingManager.Instance.LayerMask
+            if (Physics.Raycast(headPosition, gazeDirection, out hitInfo, GazeManager.Instance.MaxGazeDistance, SpatialMappingManager.Instance.LayerMask))
             {
                 Quaternion toQuat = Quaternion.LookRotation(hitInfo.normal * -1);
 
@@ -79,14 +81,16 @@ namespace HoloKit
                     transform.position = hitInfo.point;
                 }
 
-                toQuat.x = 0;
-                toQuat.z = 0;
-                transform.rotation = toQuat;
+                if (RotateTowards)
+                {
+                    toQuat.x = 0;
+                    toQuat.z = 0;
+                    transform.rotation = toQuat;
+                }
             }
             else
             {
                 transform.position = headPosition + Camera.main.transform.forward.normalized * GazeManager.Instance.MaxGazeDistance;
-                transform.rotation = Quaternion.identity;
             }
         }
 

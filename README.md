@@ -1,2 +1,2 @@
 # HoloKit
-HoloLens toolkit for Unity, improved and stripped version from Microsoft/HoloToolkit-Unity
+HoloLens toolkit for Unity, heavily forked version from [Microsoft/HoloToolkit-Unity](https://github.com/Microsoft/HoloToolkit-Unity)

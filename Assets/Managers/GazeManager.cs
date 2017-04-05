@@ -99,10 +99,13 @@ namespace HoloKit
                     // Check if the currently hit object has changed
                     if (!oldFocusedObjects.Contains(FocusedObject))
                     {
-                        IGazeable gazeObject = (IGazeable)FocusedObject.GetComponent(typeof(IGazeable));
-                        if (gazeObject != null)
+                        Component[] gazeObjects = FocusedObject.GetComponents(typeof(IGazeable));
+                        if (gazeObjects != null)
                         {
-                            gazeObject.OnGazeEnter();
+                            foreach (var gazeObject in gazeObjects)
+                            {
+                                ((IGazeable)gazeObject).OnGazeEnter();
+                            }
                         }
                     }
                 }
@@ -118,12 +121,15 @@ namespace HoloKit
 
             foreach (var oldFocuesdObject in oldFocusedObjects)
             {
-                if (FocusedObjects.Contains(oldFocuesdObject) == false)
+                if (!FocusedObjects.Contains(oldFocuesdObject))
                 {
-                    IGazeable gazeObject = (IGazeable)oldFocuesdObject.GetComponent(typeof(IGazeable));
-                    if (gazeObject != null)
+                    Component[] gazeObjects = oldFocuesdObject.GetComponents(typeof(IGazeable));
+                    if (gazeObjects != null)
                     {
-                        gazeObject.OnGazeExit();
+                        foreach (var gazeObject in gazeObjects)
+                        {
+                            ((IGazeable)gazeObject).OnGazeExit();
+                        }
                     }
                 }
             }

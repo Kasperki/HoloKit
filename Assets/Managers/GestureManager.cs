@@ -56,12 +56,14 @@ namespace HoloKit
 
         private void OnEnable()
         {
-            //TODO START
+            basicGestureRecognizer.Start();
+            interactionRecognizer.Start();
         }
 
         private void OnDisable()
         {
-            //TODO STOP
+            basicGestureRecognizer.Stop();
+            interactionRecognizer.Stop();
         }
 
         void OnDestroy()

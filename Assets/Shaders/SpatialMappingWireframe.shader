@@ -81,7 +81,7 @@ Shader "Custom/MR/Wireframe"
 					v.vertex = mul(unity_WorldToObject, wpos);
 					o.wavePosition = float4(1,0,0,0);
 				}
-				else 
+				else
 				{
 					o.wavePosition = float4(0, 0, 0, 0);
 				}

@@ -56,20 +56,20 @@ namespace HoloKit
 
         private void OnEnable()
         {
-            basicGestureRecognizer.Start();
-            interactionRecognizer.Start();
+            //basicGestureRecognizer.Start();
+            //interactionRecognizer.Start();
         }
 
         private void OnDisable()
         {
-            basicGestureRecognizer.Stop();
-            interactionRecognizer.Stop();
+            //basicGestureRecognizer.Stop();
+            //interactionRecognizer.Stop();
         }
 
         void OnDestroy()
         {
-            basicGestureRecognizer.Stop();
-            interactionRecognizer.Stop();
+            //basicGestureRecognizer.Stop();
+            //interactionRecognizer.Stop();
         }
 
         private void OnTap()
@@ -78,11 +78,11 @@ namespace HoloKit
 
             if (focusedObject != null)
             {
-                ISelectable selectable = (ISelectable)focusedObject.GetComponent(typeof(ISelectable));
-                if(selectable != null)
+                Component[] selectables = focusedObject.GetComponents(typeof(ISelectable));
+                foreach (var selectable in selectables)
                 {
-                    selectable.OnSelect();
-                }                
+                    ((ISelectable)selectable).OnSelect();
+                }              
             }
 
             if (OnTapped != null)
@@ -94,10 +94,10 @@ namespace HoloKit
         {
             if (focusedObject != null)
             {
-                ISelectable selectable = (ISelectable)focusedObject.GetComponent(typeof(ISelectable));
-                if (selectable != null)
+                Component[] selectables = focusedObject.GetComponents(typeof(ISelectable));
+                foreach (var selectable in selectables)
                 {
-                    selectable.OnHold();
+                    ((ISelectable)selectable).OnHold();
                 }
             }
         }
@@ -105,10 +105,10 @@ namespace HoloKit
         {
             if (focusedObject != null)
             {
-                ISelectable selectable = (ISelectable)focusedObject.GetComponent(typeof(ISelectable));
-                if (selectable != null)
+                Component[] selectables = focusedObject.GetComponents(typeof(ISelectable));
+                foreach (var selectable in selectables)
                 {
-                    selectable.OnRelease();
+                    ((ISelectable)selectable).OnRelease();
                 }
             }
         }

@@ -5,6 +5,8 @@ namespace HoloKit
     [RequireComponent(typeof(GestureManipulator))]
     public class Movable : MonoBehaviour, ISelectable, IGazeable
     {
+        public bool MoveOnTap = true;
+        public bool MoveOnHold = true;
         public Color SelectedColor = Color.red;
         public Color OnGazeEnterColor = Color.cyan;
 
@@ -28,7 +30,7 @@ namespace HoloKit
 
         public void OnSelect()
         {
-            if (!enabled)
+            if (!enabled || !MoveOnTap)
             {
                 return;
             }
@@ -56,12 +58,18 @@ namespace HoloKit
 
         public void OnHold()
         {
-            _manipulator.ToggleManipulating();
+            if (MoveOnHold)
+            {
+                _manipulator.ToggleManipulating();
+            }
         }
 
         public void OnRelease()
         {
-            _manipulator.ToggleManipulating();
+            if (MoveOnHold)
+            {
+                _manipulator.ToggleManipulating();
+            }
         }
 
         public void OnGazeEnter()

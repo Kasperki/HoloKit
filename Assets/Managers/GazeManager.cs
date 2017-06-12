@@ -77,24 +77,19 @@ namespace HoloKit
             Vector3 gazeOrigin = Camera.main.transform.position;
             Vector3 gazeDirection = Camera.main.transform.forward;
             var hits = Physics.RaycastAll(gazeOrigin, gazeDirection, MaxGazeDistance, RaycastLayerMask);
-            hits = hits.OrderByDescending(m => (gazeOrigin - m.point).sqrMagnitude).ToArray();
+            hits = hits.OrderBy(m => (gazeOrigin - m.point).sqrMagnitude).ToArray();
             Hit = hits.Count() > 0;
 
             var oldFocusedObjects = new List<GameObject>(FocusedObjects);
             FocusedObjects.Clear();
 
-            if (hits.Count() > 0)
+            if (hits.Any())
             {
+                int order = 0;
                 for (int i = 0; i < hits.Count(); i++)
                 {
                     FocusedObjects.Add(hits[i].collider.gameObject);
-
-                    HitInfo = hits[i];
-
-                    Position = HitInfo.point;
-                    Normal = HitInfo.normal;
-                    lastHitDistance = HitInfo.distance;
-                    FocusedObject = HitInfo.collider.gameObject;
+                    FocusedObject = hits[i].collider.gameObject;
 
                     // Check if the currently hit object has changed
                     if (!oldFocusedObjects.Contains(FocusedObject))
@@ -102,13 +97,20 @@ namespace HoloKit
                         Component[] gazeObjects = FocusedObject.GetComponents(typeof(IGazeable));
                         if (gazeObjects != null)
                         {
-                            foreach (var gazeObject in gazeObjects)
+                            for (int j = 0; j < gazeObjects.Length; j++)
                             {
-                                ((IGazeable)gazeObject).OnGazeEnter();
+                                ((IGazeable)gazeObjects[j]).OnGazeEnter(order);
                             }
+
+                            order++;
                         }
                     }
                 }
+
+                Position = hits[0].point;
+                Normal = hits[0].normal;
+                lastHitDistance = hits[0].distance;
+                FocusedObject = hits[0].collider.gameObject;
             }
             else
             {

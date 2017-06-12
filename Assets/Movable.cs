@@ -72,7 +72,7 @@ namespace HoloKit
             }
         }
 
-        public void OnGazeEnter()
+        public void OnGazeEnter(int order)
         {
             for (int i = 0; i < renderers.Length; i++)
             {

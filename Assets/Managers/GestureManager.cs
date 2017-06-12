@@ -43,13 +43,18 @@ namespace HoloKit
         public KeyCode EditorSelectKey = KeyCode.Space;
         void LateUpdate()
         {
-            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(EditorSelectKey))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(EditorSelectKey))
             {
                 OnTap();
             }
-            if(Input.GetMouseButtonDown(2))
+
+            if (Input.GetMouseButtonDown(1))
             {
                 OnHold();
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                OnHoldEnd();
             }
         }
 #endif
